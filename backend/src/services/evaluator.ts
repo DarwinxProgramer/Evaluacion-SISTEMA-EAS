@@ -40,10 +40,17 @@ export class EvaluatorService {
     const index = (percentile / 100) * (data.length - 1);
     const lower = Math.floor(index);
     const fraction = index - lower;
+    
+    const lowerVal = data[lower];
+    if (lowerVal === undefined) return 0;
+
     if (lower + 1 < data.length) {
-      return data[lower] + fraction * (data[upper] - data[lower]);
+      const upperVal = data[lower + 1];
+      if (upperVal !== undefined) {
+        return lowerVal + fraction * (upperVal - lowerVal);
+      }
     }
-    return data[lower];
+    return lowerVal;
   }
 
   private static async saveEvidence(testType: 'nominal' | 'stress' | 'chaos', csvData: string[][], summary: any) {

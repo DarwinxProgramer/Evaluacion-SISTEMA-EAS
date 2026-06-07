@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LiveCharts from '../components/LiveCharts';
 import ResultMatrix from '../components/ResultMatrix';
@@ -58,7 +58,7 @@ const StressTest = () => {
     setResults(null);
     
     try {
-      const response = await axios.post(`${BACKEND_URL}/tests`, {
+      await axios.post(`${BACKEND_URL}/tests`, {
         test: 'stress',
         rate: Number(rate),
         duration: Number(duration)

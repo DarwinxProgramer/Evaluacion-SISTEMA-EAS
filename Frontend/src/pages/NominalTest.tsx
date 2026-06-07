@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LiveCharts from '../components/LiveCharts';
 import ResultMatrix from '../components/ResultMatrix';
@@ -36,7 +36,7 @@ const NominalTest = () => {
     setLoading(true);
     setResults(null); // Clear previous results
     try {
-      const response = await axios.post(`${BACKEND_URL}/tests`, {
+      await axios.post(`${BACKEND_URL}/tests`, {
         test: 'nominal',
         rate: 10, // Default base rate
         duration: 30

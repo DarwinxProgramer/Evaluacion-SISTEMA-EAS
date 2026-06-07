@@ -48,9 +48,14 @@ mqtt:
 
     try {
         if (await fs.pathExists(AUTOMATIONS_FILE)) {
-            const content = await fs.readFile(AUTOMATIONS_FILE, 'utf8');
+            let content = await fs.readFile(AUTOMATIONS_FILE, 'utf8');
             if (!content.includes('eas_alert_logger')) {
-                await fs.appendFile(AUTOMATIONS_FILE, automationConfig);
+                // Home Assistant often initializes automations.yaml with "[]"
+                if (content.trim() === '[]') {
+                    await fs.writeFile(AUTOMATIONS_FILE, automationConfig.trim() + '\n');
+                } else {
+                    await fs.appendFile(AUTOMATIONS_FILE, automationConfig);
+                }
                 console.log('Added EAS Alert Logger automation to automations.yaml');
             } else {
                 console.log('Automation already exists in automations.yaml');

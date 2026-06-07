@@ -24,7 +24,7 @@ const ResultMatrix: React.FC<ResultMatrixProps> = ({ results, testType }) => {
     { id: 'mttr', name: 'MTTR', value: results.mttr, threshold: '≤ 300 s', unit: 's', isPass: (results.mttr || 999) <= 300 },
   ];
 
-  let visibleMetrics = [];
+  let visibleMetrics: typeof allMetrics = [];
   if (testType === 'nominal') {
     visibleMetrics = allMetrics.filter(m => m.id === 'availability' || m.id === 'nominalLatency' || m.id === 'cpuUsage');
   } else if (testType === 'stress') {
